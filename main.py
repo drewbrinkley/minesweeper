@@ -40,6 +40,17 @@ left_frame = Frame(
 #place left_frame in window
 left_frame.place(x=0, y=utilities.height_prct(25))
 
+# create variable, center_frame, to create frame in center of window
+center_frame = Frame(
+    root,
+    bg='green', # change after debugging
+    width=utilities.width_prct(75),
+    height=utilities.height_prct(75)
+)
+
+# place center_frame in window
+center_frame.place(x=utilities.width_prct(25), y=utilities.height_prct(25))
+
 # Run the game window
 root.mainloop()
 
