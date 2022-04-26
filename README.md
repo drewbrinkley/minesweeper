@@ -1,0 +1,1 @@
+Creating a Python game based upon the Windows classic, _Minesweeper_.  This project has been created by following a tutorial from [freeCodeCamp](https://www.freecodecamp.org/news/object-oriented-programming-with-python-code-a-minesweeper-game/).
