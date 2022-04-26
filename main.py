@@ -54,12 +54,13 @@ center_frame = Frame(
 # place center_frame in window
 center_frame.place(x=utilities.width_prct(25), y=utilities.height_prct(25))
 
-for x in range(5):
-    for y in range(5):
+# nested for loops to create grid of cell/buttons
+for x in range(settings.GRID_SIZE):
+    for y in range(settings.GRID_SIZE):
         c = Cell()
         c.create_button_object(center_frame)
         c.cell_btn_object.grid(
-            column=y, row=x
+            column=x, row=y
         )
 
 
