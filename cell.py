@@ -1,7 +1,9 @@
 # import Button class
+from cmath import pi
 from tkinter import Button
 # import Random library
 import random
+import settings
 
 # create class for Cell
 class Cell:
@@ -41,9 +43,12 @@ class Cell:
     # create static method to convert some cells into mines
     @staticmethod
     def randomize_mines():
-        my_list = ["Jim", "Michael", "Paul"]
-        picked_names = random.sample(my_list, 2)
-        print(picked_names)
+        picked_cells = random.sample(
+            Cell.all, settings.MINES_COUNT
+        )
+        # create for loop to change the randomized picked cells into mines
+        for picked_cell in picked_cells:
+            picked_cell.is_mine = True
 
     # format representation of each object with cell x,y values
     def __repr__(self):

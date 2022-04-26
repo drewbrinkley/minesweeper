@@ -63,7 +63,7 @@ for x in range(settings.GRID_SIZE):
             column=x, row=y
         )
 
-print(Cell.all)
+Cell.randomize_mines() # call randomize_mines() to debug changes to static method
 
 # Run the game window
 root.mainloop()
