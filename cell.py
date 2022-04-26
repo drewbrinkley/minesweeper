@@ -3,11 +3,15 @@ from tkinter import Button
 
 # create class for Cell
 class Cell:
+    all = []
     def __init__(self, x, y, is_mine=False):
         self.is_mine = is_mine
         self.cell_btn_object = None
         self.x = x
         self.y = y
+
+        # append object to Cell.all list
+        Cell.all.append(self)
 
     def create_button_object(self, location):
         btn = Button(
@@ -31,3 +35,8 @@ class Cell:
     def right_click_actions(self, event):
         print(event)
         print("I am right clicked")
+
+    # create static method to convert some cells into mines
+    @staticmethod
+    def randomize_mines():
+        pass
