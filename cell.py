@@ -1,5 +1,7 @@
 # import Button class
 from tkinter import Button
+# import Random library
+import random
 
 # create class for Cell
 class Cell:
@@ -39,4 +41,10 @@ class Cell:
     # create static method to convert some cells into mines
     @staticmethod
     def randomize_mines():
-        pass
+        my_list = ["Jim", "Michael", "Paul"]
+        picked_names = random.sample(my_list, 2)
+        print(picked_names)
+
+    # format representation of each object with cell x,y values
+    def __repr__(self):
+        return f"Cell({self.x}, {self.y})"
