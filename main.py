@@ -4,6 +4,8 @@ from tkinter import *
 import settings
 # import utilities.py
 import utilities
+# import Cell class
+from cell import Cell
 
 # create root variable
 root = Tk()
@@ -19,7 +21,7 @@ root.resizable(False, False)
 # create variable top_frame, instantiated from Frame class - create frame at top of game window
 top_frame = Frame(
     root,
-    bg='red', # change later to black after debugging
+    bg='black', 
     # set WIDTH to 100%
     width=settings.WIDTH,
     # set height to 25% by calling height_prct() from utilities
@@ -31,7 +33,7 @@ top_frame.place(x=0, y=0)
 # create variable, left_frame, to create frame on left side of window
 left_frame = Frame(
     root,
-    bg='blue', # change to black after debugging
+    bg='black', 
     # set width to 25% by calling width_prct()
     width=utilities.width_prct(25),
     # set height to 75% by calling height_prct()
@@ -43,13 +45,23 @@ left_frame.place(x=0, y=utilities.height_prct(25))
 # create variable, center_frame, to create frame in center of window
 center_frame = Frame(
     root,
-    bg='green', # change after debugging
+    bg='black', 
+    # set dimensions to 75% by calling width_prct and height_prct
     width=utilities.width_prct(75),
     height=utilities.height_prct(75)
 )
 
 # place center_frame in window
 center_frame.place(x=utilities.width_prct(25), y=utilities.height_prct(25))
+
+for x in range(5):
+    for y in range(5):
+        c = Cell()
+        c.create_button_object(center_frame)
+        c.cell_btn_object.grid(
+            column=y, row=x
+        )
+
 
 # Run the game window
 root.mainloop()
