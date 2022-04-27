@@ -13,6 +13,7 @@ class Cell:
     def __init__(self, x, y, is_mine=False):
         self.is_mine = is_mine
         self.is_opened = False
+        self.is_mine_candidate = False
         self.cell_btn_object = None
         self.x = x
         self.y = y
@@ -113,8 +114,16 @@ class Cell:
 
     # create method to define action for right-clicking
     def right_click_actions(self, event):
-        print(event)
-        print("I am right clicked")
+        if not self.is_mine_candidate:
+            self.cell_btn_object.configure(
+                bg='yellow'
+            )
+            self.is_mine_candidate = True
+        else:
+            self.cell_btn_object.configure(
+                bg='gray85'
+            )
+            self.is_mine_candidate = False
 
     # create static method to convert some cells into mines
     @staticmethod
