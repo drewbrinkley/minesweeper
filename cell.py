@@ -1,6 +1,6 @@
 # import Button class
 from cmath import pi
-from tkinter import Button
+from tkinter import Button, Label
 # import Random library
 import random
 import settings
@@ -8,8 +8,11 @@ import settings
 # create class for Cell
 class Cell:
     all = []
+    cell_count = settings.CELL_COUNT
+    cell_count_label_object = None
     def __init__(self, x, y, is_mine=False):
         self.is_mine = is_mine
+        self.is_opened = False
         self.cell_btn_object = None
         self.x = x
         self.y = y
@@ -29,6 +32,20 @@ class Cell:
         btn.bind('<Button-3>', self.right_click_actions)
         self.cell_btn_object = btn
 
+    # create static method to display number of cells remaining
+    @staticmethod
+    def create_cell_count_label(location):
+        lbl = Label(
+            location,
+            text=f"Cells Left:{Cell.cell_count}",
+            width=12,
+            height=4,
+            bg="black",
+            fg='white',
+            font=("", 30)
+        )
+        Cell.cell_count_label_object = lbl
+    
     # create method to define action for left-clicking
     def left_click_actions(self, event):
         # create if statement for result if cell is a mine
@@ -36,6 +53,10 @@ class Cell:
             self.show_mine()
         # else statement for result if cell is not a mine
         else:
+            # create if statement to show all surrounding cells if selected cell has no adjacent mines
+            if self.surrounded_cells_mines_length == 0:
+                for cell_obj in self.surrounded_cells:
+                    cell_obj.show_cell()
             self.show_cell()
 
     # create method get_cell_by_axis to return the cell object based on the values of x,y
@@ -74,7 +95,16 @@ class Cell:
     
     # create method show_cell that shows number of mines in surrounding cells
     def show_cell(self):
-        self.cell_btn_object.configure(text=self.surrounded_cells_mines_length)
+        if not self.is_opened:
+            Cell.cell_count -= 1
+            self.cell_btn_object.configure(text=self.surrounded_cells_mines_length)
+            # replace the text of cell_count_label with updated count
+            if Cell.cell_count_label_object:
+                Cell.cell_count_label_object.configure(
+                    text=f"Cells Left:{Cell.cell_count}"
+                    )
+        # change status of is_opened of selected cell to mark it as opened
+        self.is_opened = True
 
     # create method show_mine for selected cells with mines
     def show_mine(self):
