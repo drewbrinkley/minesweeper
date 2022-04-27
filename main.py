@@ -30,6 +30,19 @@ top_frame = Frame(
 # place top_frame in window
 top_frame.place(x=0, y=0)
 
+# create game title in top frame
+game_title = Label(
+    top_frame,
+    bg='black',
+    fg='white',
+    text="Minesweeper Game",
+    font=("", 48)
+)
+
+game_title.place(
+    x=utilities.width_prct(25), y=0
+)
+
 # create variable, left_frame, to create frame on left side of window
 left_frame = Frame(
     root,

@@ -4,6 +4,8 @@ from tkinter import Button, Label
 # import Random library
 import random
 import settings
+from ctypes import * # ctypes doesn't work in Linux
+import sys
 
 # create class for Cell
 class Cell:
@@ -59,6 +61,13 @@ class Cell:
                 for cell_obj in self.surrounded_cells:
                     cell_obj.show_cell()
             self.show_cell()
+            # player wins game if cell remaining count = mine count
+            if Cell.cell_count == settings.MINES_COUNT:
+                print("Great job - you win!!")
+        
+        # cancel left and right click events if cell is already opened
+        self.cell_btn_object.unbind('<Button-1>')
+        self.cell_btn_object.unbind('<Button-3>')
 
     # create method get_cell_by_axis to return the cell object based on the values of x,y
     def get_cell_by_axis(self, x, y):
@@ -104,6 +113,10 @@ class Cell:
                 Cell.cell_count_label_object.configure(
                     text=f"Cells Left:{Cell.cell_count}"
                     )
+            # change background color to original color if this was flagged as mine candidate
+            self.cell_btn_object.configure(
+                bg='gray85'
+            )
         # change status of is_opened of selected cell to mark it as opened
         self.is_opened = True
 
@@ -111,6 +124,11 @@ class Cell:
     def show_mine(self):
         #  logic to interrupt game and display "game over" message
         self.cell_btn_object.configure(bg='red') # temporarily change cell to red
+        print("""
+        You clicked on a mine.
+        Game Over""")
+        #ctypes.windll.user32.MessageBoxW(0, 'You clicked on a mine', 'Game Over', 0) ## does not work in Linux
+        sys.exit()
 
     # create method to define action for right-clicking
     def right_click_actions(self, event):
@@ -121,7 +139,7 @@ class Cell:
             self.is_mine_candidate = True
         else:
             self.cell_btn_object.configure(
-                bg='gray85'
+                bg='gray85' # used this color instead of SystemButtonFace (not supported in Linux)
             )
             self.is_mine_candidate = False
 
