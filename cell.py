@@ -21,8 +21,7 @@ class Cell:
         btn = Button(
             location,
             width=12,
-            height=4,
-            text=f"{self.x}, {self.y}"
+            height=4,            
         )
         # create action for left-clicking
         btn.bind('<Button-1>', self.left_click_actions)
@@ -32,8 +31,40 @@ class Cell:
 
     # create method to define action for left-clicking
     def left_click_actions(self, event):
-        print(event)
-        print("I am left clicked")
+        # create if statement for result if cell is a mine
+        if self.is_mine:
+            self.show_mine()
+        # else statement for result if cell is not a mine
+        else:
+            self.show_cell()
+
+    # create method get_cell_by_axis to return the cell object based on the values of x,y
+    def get_cell_by_axis(self, x, y):
+        for cell in Cell.all:
+            if cell.x == x and cell.y == y:
+                return cell
+    
+    # create method show_cell that contains list of the 8 possible surrounding cells
+    def show_cell(self):
+        surrounded_cells = [
+            self.get_cell_by_axis(self.x - 1, self.y - 1),
+            self.get_cell_by_axis(self.x - 1, self.y),
+            self.get_cell_by_axis(self.x -1, self.y + 1),
+            self.get_cell_by_axis(self.x, self.y - 1),
+            self.get_cell_by_axis(self.x, self.y + 1),
+            self.get_cell_by_axis(self.x + 1, self.y -1),
+            self.get_cell_by_axis(self.x + 1, self.y),
+            self.get_cell_by_axis(self.x + 1, self.y + 1)
+        ]
+
+        # create list comprehension with one-line for loop to disregard null cell values
+        surrounded_cells = [cell for cell in surrounded_cells if cell is not None]
+        print(surrounded_cells) # debugging print
+
+    # create method show_mine for selected cells with mines
+    def show_mine(self):
+        #  logic to interrupt game and display "game over" message
+        self.cell_btn_object.configure(bg='red') # temporarily change cell to red
 
     # create method to define action for right-clicking
     def right_click_actions(self, event):
