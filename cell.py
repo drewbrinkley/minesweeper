@@ -44,9 +44,10 @@ class Cell:
             if cell.x == x and cell.y == y:
                 return cell
     
-    # create method show_cell that contains list of the 8 possible surrounding cells
-    def show_cell(self):
-        surrounded_cells = [
+    # create read-only attribute to return list of possible surrounding cells
+    @property
+    def surrounded_cells(self):
+        cells = [
             self.get_cell_by_axis(self.x - 1, self.y - 1),
             self.get_cell_by_axis(self.x - 1, self.y),
             self.get_cell_by_axis(self.x -1, self.y + 1),
@@ -58,8 +59,22 @@ class Cell:
         ]
 
         # create list comprehension with one-line for loop to disregard null cell values
-        surrounded_cells = [cell for cell in surrounded_cells if cell is not None]
-        print(surrounded_cells) # debugging print
+        cells = [cell for cell in cells if cell is not None]
+        return cells
+    
+    # create read-only attribute with method to show mine count of surrounding cells
+    @property
+    def surrounded_cells_mines_length(self):
+        counter = 0
+        for cell in self.surrounded_cells:
+            if cell.is_mine:
+                counter += 1
+
+        return counter
+    
+    # create method show_cell that shows number of mines in surrounding cells
+    def show_cell(self):
+        self.cell_btn_object.configure(text=self.surrounded_cells_mines_length)
 
     # create method show_mine for selected cells with mines
     def show_mine(self):
